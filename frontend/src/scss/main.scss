@@ -1,0 +1,8 @@
+// Import Bootstrap variable overrides
+@import './vars';
+
+// Import Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Import custom styles
+@import './custom';

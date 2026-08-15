@@ -17,23 +17,28 @@ A modern web application built with Vite, React 18, TypeScript, and Bootstrap 5.
 ## Prerequisites
 
 - Node.js 22.x (preferably 22.21.1)
-- Yarn 4
+- Yarn 4 (via Corepack — included with Node 22)
 
 ## Getting Started
 
-1. Install dependencies:
+1. Enable Corepack once (if you haven't already):
+   ```bash
+   corepack enable
+   ```
+
+2. Install dependencies:
    ```bash
    yarn install
    ```
 
-2. Start the development server:
+3. Start the development server:
    ```bash
    yarn start
    # or
    yarn dev
    ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Available Scripts
 

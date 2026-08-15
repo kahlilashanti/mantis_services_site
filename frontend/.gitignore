@@ -32,7 +32,8 @@ dist-ssr
 !.yarn/versions
 .pnp.*
 
-# Environment
+# Unoptimized source reels — stored in video-sources/ for re-encoding
+video-sources/
 .env
 .env.local
 .env.*.local

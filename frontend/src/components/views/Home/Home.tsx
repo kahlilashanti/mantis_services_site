@@ -1,22 +1,24 @@
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import Hero from '@src/components/home/Hero/Hero'
+import StatementBand from '@src/components/home/StatementBand/StatementBand'
+import WorkGrid from '@src/components/home/WorkGrid/WorkGrid'
+import ClientLogos from '@src/components/home/ClientLogos/ClientLogos'
+import Team from '@src/components/home/Team/Team'
+import Capabilities from '@src/components/home/Capabilities/Capabilities'
+import Differentiator from '@src/components/home/Differentiator/Differentiator'
+import ClosingCta from '@src/components/home/ClosingCta/ClosingCta'
 
 function Home() {
   return (
-    <div className="min-vh-100 d-flex align-items-center">
-      <Container>
-        <Row className="justify-content-center">
-          <Col lg={8} className="text-center">
-            <h1 className="display-3 fw-bold mb-4">Mantis Services</h1>
-            <p className="lead mb-5">
-              Your trusted partner for professional services and solutions.
-            </p>
-            <Button variant="primary" size="lg">
-              Get Started
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <>
+      <Hero />
+      <StatementBand />
+      <WorkGrid limit={6} />
+      <ClientLogos />
+      <Team />
+      <Capabilities />
+      <Differentiator />
+      <ClosingCta />
+    </>
   )
 }
 

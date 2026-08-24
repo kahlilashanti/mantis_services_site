@@ -1,19 +1,29 @@
 import type { CSSProperties, RefObject } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { media, work } from '@src/config/mantis'
+import { media, work, type WorkItem } from '@src/config/mantis'
 import { useReveal } from '@src/hooks/useReveal'
 import { useIsTouchDevice } from '@src/hooks/useMediaQuery'
 
-function WorkTile({ item, index }: { item: (typeof work)[0]; index: number }) {
+function resolvePoster(item: WorkItem): string | undefined {
+  return item.poster ?? (item.videoKey ? media.workPosters[item.videoKey] : undefined)
+}
+
+function resolveVideo(item: WorkItem): string | undefined {
+  return item.video ?? (item.videoKey ? media.workVideos[item.videoKey] : undefined)
+}
+
+function WorkTile({ item, index }: { item: WorkItem; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const { ref, visible } = useReveal(0.12)
   const isTouch = useIsTouchDevice()
   const [active, setActive] = useState(false)
   const [loaded, setLoaded] = useState(false)
 
-  const videoSrc = item.videoKey ? media.workVideos[item.videoKey] : undefined
-  const posterSrc = item.videoKey ? media.workPosters[item.videoKey] : undefined
+  const posterSrc = resolvePoster(item)
+  const videoSrc = resolveVideo(item)
+  const isStatic = Boolean(posterSrc && !videoSrc)
+  const mediaFit = isStatic ? (item.mediaFit ?? 'contain') : 'cover'
 
   const loadVideo = useCallback(() => {
     const video = videoRef.current
@@ -79,7 +89,7 @@ function WorkTile({ item, index }: { item: (typeof work)[0]; index: number }) {
     <Link
       to="/work"
       ref={ref as RefObject<HTMLAnchorElement>}
-      className={`work-tile${visible ? ' work-tile--visible' : ''}${active ? ' work-tile--playing' : ''}`}
+      className={`work-tile${visible ? ' work-tile--visible' : ''}${active ? ' work-tile--playing' : ''}${isStatic ? ' work-tile--static' : ''}${isStatic && mediaFit === 'contain' ? ' work-tile--contain' : ''}`}
       style={
         {
           '--tile-accent': item.accent,
@@ -88,7 +98,7 @@ function WorkTile({ item, index }: { item: (typeof work)[0]; index: number }) {
       }
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
-      aria-label={`${item.client} — ${item.result}`}
+      aria-label={`${item.client}, ${item.result}`}
     >
       <div className="work-tile__media">
         {posterSrc && (
@@ -111,7 +121,7 @@ function WorkTile({ item, index }: { item: (typeof work)[0]; index: number }) {
             poster={posterSrc}
           />
         )}
-        {!videoSrc && <div className="work-tile__fallback" />}
+        {!posterSrc && !videoSrc && <div className="work-tile__fallback" />}
         <div className="work-tile__tint" />
         <div className="work-tile__index">{String(index + 1).padStart(2, '0')}</div>
       </div>
@@ -138,6 +148,9 @@ function WorkGrid({ limit }: { limit?: number }) {
         <h2 className="section-title">
           Built for brands that want people to <em>stay</em>
         </h2>
+        <p className="work-grid-section__lead">
+          Browser-based experiences, mobile-first. Every project measured by what it moved.
+        </p>
       </div>
       <div className="work-grid">
         {items.map((item, index) => (

@@ -41,7 +41,7 @@ function Contact() {
           <div>
             {submitted ? (
               <Alert variant="success" className="contact-alert">
-                Message received. We&apos;ll be in touch. (Placeholder — wire to backend later.)
+                Message received. We&apos;ll be in touch. (Placeholder: wire to backend later.)
               </Alert>
             ) : (
               <Form onSubmit={handleSubmit} className="contact-form">

@@ -1,0 +1,46 @@
+---
+description: Check and preserve existing behavior before and after every change
+alwaysApply: true
+---
+
+# Preserve existing functionality
+
+Do not break working UI, styles, or behavior while implementing a new request. A focused fix that regresses something else is not done.
+
+## Before editing
+
+1. **Read first** — Open the file(s) you will change and the files that consume them (imports, parent components, shared SCSS).
+2. **Know the baseline** — Identify what currently works (layout, overlays, nav, hover states, responsive breakpoints, config-driven content).
+3. **Search for collisions** — Grep for the same class name, selector, hook, or config key. Never add a second definition without checking whether one already exists.
+4. **Minimize blast radius** — Change only what the task requires. Do not copy-paste blocks from unrelated components (e.g. work-tile styles into hero scrims).
+
+## While editing
+
+- Prefer extending existing patterns over inventing parallel ones.
+- If renaming or moving code, update **all** references in the same change.
+- CSS/SCSS: one selector → one intentional rule block. Layered overrides must be explicit, not accidental duplicates.
+- React: preserve existing props, aria labels, routing, and conditional behavior unless the task asks to change them.
+
+## After editing
+
+1. **Diff review** — Scan the diff for unrelated deletions, duplicate selectors, dead rules, or changed defaults outside scope.
+2. **Verify** — Run the relevant check when available (`yarn build`, linter, or start dev server for UI work).
+3. **Spot-check affected surfaces** — For visual changes, confirm the area you touched **and** adjacent areas still look/behave as before (hero scrims, nav, grid tiles, mobile layout).
+
+## Stop and ask if
+
+- The fix requires removing behavior you did not confirm with the user.
+- Two valid implementations conflict and the old behavior was intentional.
+- You cannot verify without the user (missing assets, env, or browser state).
+
+## Example (do not repeat)
+
+```scss
+/* BAD: duplicate selector — second block wins partially; first block's
+   border-radius/transform leaks and breaks the hero scrim */
+.hero__scrims { border-radius: 999px; transform: translate(-50%, -50%); }
+.hero__scrims { inset: 0; background: linear-gradient(...); }
+
+/* GOOD: single rule block with the intended gradient overlay */
+.hero__scrims { inset: 0; background: linear-gradient(...); }
+```

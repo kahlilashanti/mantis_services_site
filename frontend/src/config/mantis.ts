@@ -24,6 +24,13 @@ export interface WorkItem {
   result: string
   category: 'commerce' | 'sports' | 'immersive' | 'product' | 'ai' | 'experiential'
   accent: string
+  /** Poster JPG, logo PNG, or screenshot — always shown */
+  poster?: string
+  /** Optional loop MP4 (hover / in-view on mobile) */
+  video?: string
+  /** Static logo tiles only: contain + padding. Video tiles always use cover (16:9). */
+  mediaFit?: 'cover' | 'contain'
+  /** @deprecated Fallback shared placeholders until per-project assets exist */
   videoKey?: WorkVideoKey
 }
 
@@ -37,15 +44,15 @@ export interface TeamMember {
 
 export const brand = {
   name: 'Mantis',
-  headline: 'We build an internet worth staying in.',
+  headline: 'We build digital experiences worth staying in.',
   subheadline:
-    'Mantis is a creative technology company that creates digital experiences people want to explore, participate in, and return to.',
+    'Mantis is a creative technology company that builds experiences people want to explore, participate in, and return to.',
   positioning:
-    'We solve business problems by translating them through a creative lens, shaping the strategy, and building digital experiences that convert — meeting people where they are, honoring your brand story, and exceeding expectations with something worth talking about.',
+    'We solve business problems by translating them through a creative lens, shaping the strategy, and building digital experiences that convert, meeting people where they are, honoring your brand story, and exceeding expectations with something worth talking about.',
   belief:
     'The internet is good at delivering information and transactions. We believe it can do more. The best physical experiences create curiosity, participation, emotion, and memory. We bring that same thinking to the digital world.',
   differentiator:
-    'We own spatial and immersive technology others license. We move faster than holdcos. And we build for conversion — not just awards.',
+    'We own spatial and immersive technology others license. We move faster than holdcos. And we build for conversion, not just awards.',
   closingLine: 'Ready to build something people stay for?',
   email: 'hello@trymantislabs.com',
 }
@@ -70,31 +77,94 @@ export const clients = [
 
 export const work: WorkItem[] = [
   {
-    id: 'new-balance',
-    client: 'New Balance',
-    title: 'Direct-to-fan commerce experience',
-    result: '+80% AOV',
-    category: 'commerce',
-    accent: '#c8102e',
-    videoKey: 'commerce',
-  },
-  {
-    id: 'chicago-cubs',
-    client: 'Chicago Cubs',
-    title: 'Interactive fan platform',
-    result: 'Season-long engagement',
+    id: 'pro-padel-league',
+    client: 'Pro Padel League',
+    title: 'Live broadcast stats overlay',
+    result: 'Real-time fan analytics',
     category: 'sports',
-    accent: '#0e3386',
-    videoKey: 'sports',
+    accent: '#7c3aed',
+    poster: '/videos/work/ppl-poster.jpg',
+    video: '/videos/work/ppl.mp4',
   },
   {
     id: 'burnley-fc',
     client: 'Burnley FC',
-    title: 'Digital membership experience',
-    result: 'Global fan reach',
+    title: 'X-ray spatial token hunt',
+    result: 'Immersive fan discovery',
     category: 'sports',
     accent: '#6c1d45',
-    videoKey: 'sports',
+    poster: '/videos/work/burnley-full-poster.jpg',
+    video: '/videos/work/burnley-full.mp4',
+  },
+  {
+    id: 'chicago-cubs',
+    client: 'Chicago Cubs',
+    title: 'Custom 3d build + seamless Shopify integration for Cubs vs Cardinals Field of Dreams',
+    result: '31.9% conversion rate',
+    category: 'sports',
+    accent: '#0e3386',
+    poster: '/videos/work/cubs-shop-poster.jpg',
+    video: '/videos/work/cubs-shop.mp4',
+  },
+  {
+    id: 'new-balance',
+    client: 'New Balance',
+    title: '3D team sports showroom',
+    result: '+80% AOV',
+    category: 'commerce',
+    accent: '#c8102e',
+    poster: '/videos/work/new-balance-poster.jpg',
+    video: '/videos/work/new-balance.mp4',
+  },
+  {
+    id: 'mariners',
+    client: 'Seattle Mariners',
+    title: 'Premium suite experience',
+    result: 'Custom brand environment',
+    category: 'sports',
+    accent: '#0c2c56',
+    poster: '/videos/work/mariners-poster.jpg',
+    video: '/videos/work/mariners.mp4',
+  },
+  {
+    id: 'super-bowl-pickem',
+    client: 'Super Bowl Pick\'em',
+    title: 'Branded prediction game',
+    result: 'Mass-participation engagement',
+    category: 'experiential',
+    accent: '#d4ff4d',
+    poster: '/videos/work/super-bowl-poster.jpg',
+    video: '/videos/work/super-bowl.mp4',
+  },
+  {
+    id: 'camden-yards',
+    client: 'Camden Yards',
+    title: 'Ballpark gamification',
+    result: 'Street-to-stadium rewards',
+    category: 'sports',
+    accent: '#df4601',
+    poster: '/videos/work/camden-poster.jpg',
+    video: '/videos/work/camden.mp4',
+  },
+  {
+    id: 'blues',
+    client: 'St. Louis Blues',
+    title: 'Fan loyalty platform',
+    result: '+80% AOV',
+    category: 'sports',
+    accent: '#002f87',
+    poster: '/videos/work/blues-logo.png',
+    mediaFit: 'contain',
+  },
+  {
+    id: 'mma-fight-iq',
+    client: 'Key MMA',
+    title: '3D Fight IQ overlay',
+    result: 'Broadcast intelligence',
+    category: 'sports',
+    accent: '#ef4444',
+    poster: '/videos/work/mma-poster.jpg',
+    video: '/videos/work/mma.mp4',
   },
   {
     id: 'arsenal',
@@ -103,16 +173,8 @@ export const work: WorkItem[] = [
     result: 'Fan participation at scale',
     category: 'immersive',
     accent: '#ef0107',
+    poster: '/videos/work/arsenal-poster.jpg',
     videoKey: 'immersive',
-  },
-  {
-    id: 'mariners',
-    client: 'Seattle Mariners',
-    title: 'In-stadium digital activation',
-    result: 'Live event conversion',
-    category: 'experiential',
-    accent: '#0c2c56',
-    videoKey: 'sports',
   },
   {
     id: 'roblox',
@@ -121,33 +183,7 @@ export const work: WorkItem[] = [
     result: 'Gen-Z audience capture',
     category: 'immersive',
     accent: '#00a2ff',
-    videoKey: 'immersive',
-  },
-  {
-    id: 'blues',
-    client: 'St. Louis Blues',
-    title: 'Fan loyalty platform',
-    result: 'Repeat engagement lift',
-    category: 'product',
-    accent: '#002f87',
-    videoKey: 'commerce',
-  },
-  {
-    id: 'ai-product',
-    client: 'Confidential',
-    title: 'AI-integrated product prototype',
-    result: 'Concept to production in weeks',
-    category: 'ai',
-    accent: '#8b5cf6',
-    videoKey: 'commerce',
-  },
-  {
-    id: 'spatial-launch',
-    client: 'Confidential',
-    title: 'Product launch environment',
-    result: 'Launch-day sell-through',
-    category: 'immersive',
-    accent: '#14b8a6',
+    poster: '/videos/work-immersive-poster.jpg',
     videoKey: 'immersive',
   },
 ]
@@ -164,7 +200,7 @@ export const team: TeamMember[] = [
     id: 'justin',
     name: 'Justin Fortier',
     title: 'Chief Technology Officer',
-    bio: 'Architects the platforms behind the experiences — from rapid prototypes to production-grade systems.',
+    bio: 'Architects the platforms behind the experiences, from rapid prototypes to production-grade systems.',
     funFact: 'Believes the best creative idea is worthless if it can\'t ship on deadline.',
   },
   {
@@ -178,7 +214,7 @@ export const team: TeamMember[] = [
     id: 'ivan',
     name: 'Ivan Heredia',
     title: 'Chief Growth Officer',
-    bio: 'Turns creative capability into commercial momentum — partnerships, revenue, and scale.',
+    bio: 'Turns creative capability into commercial momentum: partnerships, revenue, and scale.',
     funFact: 'Thinks every great experience should have a measurable outcome attached.',
   },
 ]

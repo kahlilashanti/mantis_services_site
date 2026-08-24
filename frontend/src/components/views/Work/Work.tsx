@@ -8,7 +8,7 @@ function Work() {
         <p className="section-eyebrow">Work</p>
         <h1 className="page-title">Built to perform</h1>
         <p className="page-lead">
-          Immersive, web, product, and AI — one portfolio. Every project measured by what it moved.
+          Immersive, web, product, and AI. One portfolio. Every project measured by what it moved.
         </p>
       </section>
       <WorkGrid />

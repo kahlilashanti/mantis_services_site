@@ -3,12 +3,21 @@ import { media } from '@src/config/mantis'
 import { useIsMobile, usePrefersReducedMotion } from '@src/hooks/useMediaQuery'
 import { prefersSaveData } from '@src/utils/media'
 
+function initialCanPlayVideo(): boolean {
+  if (typeof window === 'undefined') return false
+  return (
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    !prefersSaveData()
+  )
+}
+
 function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const isMobile = useIsMobile()
   const reducedMotion = usePrefersReducedMotion()
   const [saveData, setSaveData] = useState(false)
-  const [canPlayVideo, setCanPlayVideo] = useState(false)
+  const [canPlayVideo, setCanPlayVideo] = useState(initialCanPlayVideo)
+  const [videoReady, setVideoReady] = useState(false)
 
   const poster = isMobile ? media.heroPosterMobile : media.heroPoster
   const src = isMobile ? media.heroMobile : media.heroDesktop
@@ -20,6 +29,10 @@ function HeroVideo() {
   useEffect(() => {
     setCanPlayVideo(!reducedMotion && !saveData)
   }, [reducedMotion, saveData])
+
+  useEffect(() => {
+    setVideoReady(false)
+  }, [src])
 
   useEffect(() => {
     const video = videoRef.current
@@ -34,20 +47,22 @@ function HeroVideo() {
       <img
         src={poster}
         alt=""
-        className="hero__poster"
+        className={`hero__poster${videoReady ? ' hero__poster--hidden' : ''}`}
         fetchPriority="high"
         decoding="async"
+        aria-hidden={videoReady}
       />
       {canPlayVideo && (
         <video
           ref={videoRef}
-          className="hero__video"
+          className={`hero__video${videoReady ? ' hero__video--ready' : ''}`}
           autoPlay
           muted
           loop
           playsInline
           preload={isMobile ? 'metadata' : 'auto'}
           poster={poster}
+          onLoadedData={() => setVideoReady(true)}
         >
           <source src={src} type="video/mp4" />
         </video>

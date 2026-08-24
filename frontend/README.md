@@ -17,7 +17,7 @@ A modern web application built with Vite, React 18, TypeScript, and Bootstrap 5.
 ## Prerequisites
 
 - Node.js 22.x (preferably 22.21.1)
-- Yarn 4 (via Corepack — included with Node 22)
+- Yarn 4 (via Corepack, included with Node 22)
 
 ## Getting Started
 

@@ -13,3 +13,7 @@
 .idea
 *.swp
 *.swo
+
+# Cursor local context (machine-specific; never commit)
+.cursor/context/
+.cursor/rules/*.local.mdc

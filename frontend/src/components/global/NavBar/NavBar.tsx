@@ -15,6 +15,13 @@ function NavBar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
   return (
     <header className={`mantis-nav ${scrolled ? 'mantis-nav--scrolled' : 'mantis-nav--hero'}`}>
       <div className="mantis-nav__inner">

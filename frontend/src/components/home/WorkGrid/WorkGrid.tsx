@@ -89,7 +89,7 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
     <Link
       to="/work"
       ref={ref as RefObject<HTMLAnchorElement>}
-      className={`work-tile${visible ? ' work-tile--visible' : ''}${active ? ' work-tile--playing' : ''}${isStatic ? ' work-tile--static' : ''}${isStatic && mediaFit === 'contain' ? ' work-tile--contain' : ''}`}
+      className={`work-tile${visible ? ' work-tile--visible' : ''}${active ? ' work-tile--playing' : ''}${isStatic ? ' work-tile--static' : ''}${isStatic && mediaFit === 'contain' ? ' work-tile--contain' : ''}${isStatic && mediaFit === 'cover' ? ' work-tile--screenshot' : ''}`}
       style={
         {
           '--tile-accent': item.accent,

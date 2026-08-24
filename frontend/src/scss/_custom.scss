@@ -779,6 +779,15 @@ em {
   background: linear-gradient(145deg, #0c0c0c, #050505);
 }
 
+.work-tile--screenshot .work-tile__poster {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.work-tile--screenshot .work-tile__tint {
+  opacity: 0.62;
+}
+
 .work-tile--static .work-tile__tint {
   opacity: 0.7;
 }

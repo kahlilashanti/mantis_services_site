@@ -28,7 +28,7 @@ export interface WorkItem {
   poster?: string
   /** Optional loop MP4 (hover / in-view on mobile) */
   video?: string
-  /** Static logo tiles only: contain + padding. Video tiles always use cover (16:9). */
+  /** Static logo tiles: contain + padding. Website screenshots: cover. Video tiles always cover. */
   mediaFit?: 'cover' | 'contain'
   /** @deprecated Fallback shared placeholders until per-project assets exist */
   videoKey?: WorkVideoKey
@@ -79,12 +79,12 @@ export const work: WorkItem[] = [
   {
     id: 'pro-padel-league',
     client: 'Pro Padel League',
-    title: 'Live broadcast stats overlay',
+    title: 'Full website rebuild, design & event hub',
     result: 'Real-time fan analytics',
     category: 'sports',
     accent: '#7c3aed',
-    poster: '/videos/work/ppl-poster.jpg',
-    video: '/videos/work/ppl.mp4',
+    poster: '/videos/work/ppl-website.jpg',
+    mediaFit: 'cover',
   },
   {
     id: 'burnley-fc',
@@ -99,8 +99,8 @@ export const work: WorkItem[] = [
   {
     id: 'chicago-cubs',
     client: 'Chicago Cubs',
-    title: 'Custom 3d build + seamless Shopify integration for Cubs vs Cardinals Field of Dreams',
-    result: '31.9% conversion rate',
+    title: '31.9% in 2 weeks · 3D + Shopify, Field of Dreams',
+    result: '10× avg ecommerce conversion',
     category: 'sports',
     accent: '#0e3386',
     poster: '/videos/work/cubs-shop-poster.jpg',
@@ -119,8 +119,8 @@ export const work: WorkItem[] = [
   {
     id: 'mariners',
     client: 'Seattle Mariners',
-    title: 'Premium suite experience',
-    result: 'Custom brand environment',
+    title: 'Club suite sales tool for corporate sponsorship',
+    result: 'Mantis CMS',
     category: 'sports',
     accent: '#0c2c56',
     poster: '/videos/work/mariners-poster.jpg',
@@ -129,12 +129,12 @@ export const work: WorkItem[] = [
   {
     id: 'super-bowl-pickem',
     client: 'Super Bowl Pick\'em',
-    title: 'Branded prediction game',
-    result: 'Mass-participation engagement',
+    title: '3D mobile-first Free Play · BC iGaming promo',
+    result: 'Most effective iGaming promotion to date',
     category: 'experiential',
     accent: '#d4ff4d',
-    poster: '/videos/work/super-bowl-poster.jpg',
-    video: '/videos/work/super-bowl.mp4',
+    poster: '/videos/work/super-bowl-pickem-poster.jpg',
+    video: '/videos/work/super-bowl-pickem.mp4',
   },
   {
     id: 'camden-yards',

@@ -13,21 +13,44 @@ function resolveVideo(item: WorkItem): string | undefined {
   return item.video ?? (item.videoKey ? media.workVideos[item.videoKey] : undefined)
 }
 
+function VisitIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 3h6v6M10 14 21 3"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 function WorkTile({ item, index }: { item: WorkItem; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const { ref, visible } = useReveal(0.12)
   const isTouch = useIsTouchDevice()
   const [active, setActive] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const isPlaceholder = Boolean(item.placeholder)
 
-  const posterSrc = resolvePoster(item)
-  const videoSrc = resolveVideo(item)
+  const posterSrc = isPlaceholder ? undefined : resolvePoster(item)
+  const videoSrc = isPlaceholder ? undefined : resolveVideo(item)
   const isStatic = Boolean(posterSrc && !videoSrc)
   const mediaFit = isStatic ? (item.mediaFit ?? 'contain') : 'cover'
 
   const loadVideo = useCallback(() => {
     const video = videoRef.current
     if (!video || !videoSrc || loaded) return
+    video.loop = true
     video.src = videoSrc
     video.load()
     setLoaded(true)
@@ -54,6 +77,21 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
   }, [])
 
   useEffect(() => {
+    const video = videoRef.current
+    if (!video || !videoSrc) return
+
+    video.loop = true
+
+    const handleEnded = () => {
+      video.currentTime = 0
+      video.play().catch(() => undefined)
+    }
+
+    video.addEventListener('ended', handleEnded)
+    return () => video.removeEventListener('ended', handleEnded)
+  }, [videoSrc, loaded])
+
+  useEffect(() => {
     const node = ref.current
     if (!node || !videoSrc) return
 
@@ -76,30 +114,23 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
   }, [isTouch, loadVideo, pauseVideo, playVideo, ref, videoSrc])
 
   function handleEnter() {
-    if (isTouch) return
+    if (isTouch || isPlaceholder) return
     playVideo()
   }
 
   function handleLeave() {
-    if (isTouch) return
+    if (isTouch || isPlaceholder) return
     pauseVideo()
   }
 
-  return (
-    <Link
-      to="/work"
-      ref={ref as RefObject<HTMLAnchorElement>}
-      className={`work-tile${visible ? ' work-tile--visible' : ''}${active ? ' work-tile--playing' : ''}${isStatic ? ' work-tile--static' : ''}${isStatic && mediaFit === 'contain' ? ' work-tile--contain' : ''}${isStatic && mediaFit === 'cover' ? ' work-tile--screenshot' : ''}`}
-      style={
-        {
-          '--tile-accent': item.accent,
-          '--tile-delay': `${index * 80}ms`,
-        } as CSSProperties
-      }
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      aria-label={`${item.client}, ${item.result}`}
-    >
+  const tileClassName = `work-tile${visible ? ' work-tile--visible' : ''}${active ? ' work-tile--playing' : ''}${isPlaceholder ? ' work-tile--placeholder' : ''}${isStatic ? ' work-tile--static' : ''}${isStatic && mediaFit === 'contain' ? ' work-tile--contain' : ''}${isStatic && mediaFit === 'cover' ? ' work-tile--screenshot' : ''}`
+  const tileStyle = {
+    '--tile-accent': item.accent,
+    '--tile-delay': `${index * 80}ms`,
+  } as CSSProperties
+
+  const tileBody = (
+    <>
       <div className="work-tile__media">
         {posterSrc && (
           <img
@@ -119,6 +150,11 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
             playsInline
             preload="none"
             poster={posterSrc}
+            onEnded={(event) => {
+              const video = event.currentTarget
+              video.currentTime = 0
+              video.play().catch(() => undefined)
+            }}
           />
         )}
         {!posterSrc && !videoSrc && <div className="work-tile__fallback" />}
@@ -130,12 +166,55 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
         <span className="work-tile__result">{item.result}</span>
         <span className="work-tile__title">{item.title}</span>
       </div>
-    </Link>
+    </>
+  )
+
+  if (isPlaceholder) {
+    return (
+      <div
+        ref={ref as RefObject<HTMLDivElement>}
+        className={tileClassName}
+        style={tileStyle}
+        aria-label={`${item.client}, ${item.result}`}
+      >
+        {tileBody}
+      </div>
+    )
+  }
+
+  return (
+    <div
+      ref={ref as RefObject<HTMLDivElement>}
+      className={tileClassName}
+      style={tileStyle}
+    >
+      {item.visitUrl && (
+        <a
+          href={item.visitUrl}
+          className="work-tile__visit"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Visit ${item.client}`}
+        >
+          <VisitIcon />
+        </a>
+      )}
+      <Link
+        to="/work"
+        className="work-tile__link"
+        onMouseEnter={handleEnter}
+        onMouseLeave={handleLeave}
+        aria-label={`${item.client}, ${item.result}`}
+      >
+        {tileBody}
+      </Link>
+    </div>
   )
 }
 
 function WorkGrid({ limit }: { limit?: number }) {
-  const items = limit ? work.slice(0, limit) : work
+  const base = limit ? work : work.filter((item) => !item.placeholder)
+  const items = limit ? base.slice(0, limit) : base
   const { ref, visible } = useReveal(0.08)
 
   return (

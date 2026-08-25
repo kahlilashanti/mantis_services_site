@@ -30,6 +30,10 @@ export interface WorkItem {
   video?: string
   /** Static logo tiles: contain + padding. Website screenshots: cover. Video tiles always cover. */
   mediaFit?: 'cover' | 'contain'
+  /** Live site — shows visit icon on tile */
+  visitUrl?: string
+  /** Homepage placeholder — no media, not linked */
+  placeholder?: boolean
   /** @deprecated Fallback shared placeholders until per-project assets exist */
   videoKey?: WorkVideoKey
 }
@@ -40,6 +44,16 @@ export interface TeamMember {
   title: string
   bio: string
   funFact: string
+  /** Headshot — `/images/team/{id}.jpg` */
+  photo?: string
+  linkedinUrl?: string
+}
+
+export interface DifferentiatorPillar {
+  id: string
+  proof: string
+  title: string
+  copy: string
 }
 
 export const brand = {
@@ -51,10 +65,35 @@ export const brand = {
     'We solve business problems by translating them through a creative lens, shaping the strategy, and building digital experiences that convert, meeting people where they are, honoring your brand story, and exceeding expectations with something worth talking about.',
   belief:
     'The internet is good at delivering information and transactions. We believe it can do more. The best physical experiences create curiosity, participation, emotion, and memory. We bring that same thinking to the digital world.',
-  differentiator:
-    'We own spatial and immersive technology others license. We move faster than holdcos. And we build for conversion, not just awards.',
+  differentiatorHeadline: 'Immersive craft. Award-winning engineering.',
+  differentiatorLead:
+    'Mantis Labs is a collaboration between Mantis, the creative technology studio behind immersive fan experiences, and FYC Labs, an award-winning development studio and two-time Inc. 5000 honoree. Creative lens and production-grade systems, under one roof.',
+  differentiators: [
+    {
+      id: 'creative',
+      proof: 'Mantis',
+      title: 'Immersive creative technology',
+      copy:
+        'Founded on the idea that the internet should feel like a place. From St. Louis Blues (+80% AOV) to Arsenal, Paris 2024, and New Balance, we build 3D, spatial, and experiential work in-house.',
+    },
+    {
+      id: 'engineering',
+      proof: 'FYC Labs',
+      title: 'Award-winning dev studio',
+      copy:
+        'Two-time Inc. 5000 honoree (#791 in 2023, #4,499 in 2025). Inc. Power Partners for IT services. Over a decade shipping web, mobile, and enterprise platforms for Stadia Ventures, Remax, and National University.',
+    },
+    {
+      id: 'collab',
+      proof: 'Mantis Labs',
+      title: 'Built together',
+      copy:
+        'Sports-native from Stadia Ventures: roster, schedule, fan engagement, and real-time data. Sprint releases, sub-two-second load times, and full client ownership of repo, hosting, and cloud.',
+    },
+  ] satisfies DifferentiatorPillar[],
   closingLine: 'Ready to build something people stay for?',
   email: 'hello@trymantislabs.com',
+  calendlyUrl: 'https://calendly.com/kahlilashanti',
 }
 
 export const capabilities = [
@@ -85,11 +124,12 @@ export const work: WorkItem[] = [
     accent: '#7c3aed',
     poster: '/videos/work/ppl-website.jpg',
     mediaFit: 'cover',
+    visitUrl: 'https://propadelleague.com/',
   },
   {
     id: 'burnley-fc',
     client: 'Burnley FC',
-    title: 'X-ray spatial token hunt',
+    title: 'DudePerfect Youth Cup fan experience',
     result: 'Immersive fan discovery',
     category: 'sports',
     accent: '#6c1d45',
@@ -107,14 +147,13 @@ export const work: WorkItem[] = [
     video: '/videos/work/cubs-shop.mp4',
   },
   {
-    id: 'new-balance',
-    client: 'New Balance',
-    title: '3D team sports showroom',
-    result: '+80% AOV',
-    category: 'commerce',
-    accent: '#c8102e',
-    poster: '/videos/work/new-balance-poster.jpg',
-    video: '/videos/work/new-balance.mp4',
+    id: 'tbd',
+    client: 'TBD',
+    title: 'Next case study',
+    result: 'Coming soon',
+    category: 'product',
+    accent: '#2a2a2a',
+    placeholder: true,
   },
   {
     id: 'mariners',
@@ -186,6 +225,16 @@ export const work: WorkItem[] = [
     poster: '/videos/work-immersive-poster.jpg',
     videoKey: 'immersive',
   },
+  {
+    id: 'new-balance',
+    client: 'New Balance',
+    title: '3D team sports showroom',
+    result: '+80% AOV',
+    category: 'commerce',
+    accent: '#c8102e',
+    poster: '/videos/work/new-balance-poster.jpg',
+    video: '/videos/work/new-balance.mp4',
+  },
 ]
 
 export const team: TeamMember[] = [
@@ -195,6 +244,8 @@ export const team: TeamMember[] = [
     title: 'Founder',
     bio: 'Builds at the intersection of sport, culture, and technology. Obsessed with experiences that earn attention.',
     funFact: 'Once turned a ballpark activation into a case study before the game ended.',
+    photo: '/images/team/kahlil.png',
+    linkedinUrl: 'https://www.linkedin.com/in/kahlilashanti/',
   },
   {
     id: 'justin',
@@ -202,6 +253,8 @@ export const team: TeamMember[] = [
     title: 'Chief Technology Officer',
     bio: 'Architects the platforms behind the experiences, from rapid prototypes to production-grade systems.',
     funFact: 'Believes the best creative idea is worthless if it can\'t ship on deadline.',
+    photo: '/images/team/justin.png',
+    linkedinUrl: 'https://www.linkedin.com/in/justinffortier/',
   },
   {
     id: 'tom',
@@ -209,6 +262,8 @@ export const team: TeamMember[] = [
     title: 'Partner',
     bio: 'Two-time SBJ Forty Under 40. Former marketing leader at Gatorade, NBA, Nike, and Arsenal.',
     funFact: 'Has commercialized some of sport\'s most indelible brands.',
+    photo: '/images/team/tom.png',
+    linkedinUrl: 'https://www.linkedin.com/in/tom-fox-7a212358/',
   },
   {
     id: 'ivan',
@@ -216,6 +271,8 @@ export const team: TeamMember[] = [
     title: 'Chief Growth Officer',
     bio: 'Turns creative capability into commercial momentum: partnerships, revenue, and scale.',
     funFact: 'Thinks every great experience should have a measurable outcome attached.',
+    photo: '/images/team/ivan.png',
+    linkedinUrl: 'https://www.linkedin.com/in/ivanheredia/',
   },
 ]
 

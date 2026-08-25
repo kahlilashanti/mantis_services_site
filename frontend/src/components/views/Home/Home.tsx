@@ -11,9 +11,9 @@ function Home() {
   return (
     <>
       <Hero />
+      <ClientLogos />
       <StatementBand />
       <WorkGrid limit={6} />
-      <ClientLogos />
       <Team />
       <Capabilities />
       <Differentiator />

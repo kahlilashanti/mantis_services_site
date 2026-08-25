@@ -38,8 +38,24 @@ function HeroVideo() {
     const video = videoRef.current
     if (!video || !canPlayVideo) return
 
+    video.loop = true
     video.load()
-    video.play().catch(() => undefined)
+
+    const playFromStart = () => {
+      video.play().catch(() => undefined)
+    }
+
+    const handleEnded = () => {
+      video.currentTime = 0
+      playFromStart()
+    }
+
+    video.addEventListener('ended', handleEnded)
+    playFromStart()
+
+    return () => {
+      video.removeEventListener('ended', handleEnded)
+    }
   }, [canPlayVideo, src])
 
   return (
@@ -63,6 +79,11 @@ function HeroVideo() {
           preload={isMobile ? 'metadata' : 'auto'}
           poster={poster}
           onLoadedData={() => setVideoReady(true)}
+          onEnded={(event) => {
+            const video = event.currentTarget
+            video.currentTime = 0
+            video.play().catch(() => undefined)
+          }}
         >
           <source src={src} type="video/mp4" />
         </video>

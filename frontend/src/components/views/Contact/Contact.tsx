@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { brand } from '@src/config/mantis'
 import CalendlyInline from '@src/components/views/Contact/CalendlyInline'
+import PageMeta from '@src/components/global/PageMeta/PageMeta'
+import { pageSeo } from '@src/config/seo'
 
 function Contact() {
   return (
     <>
+      <PageMeta {...pageSeo.contact} />
       <section className="page-hero page-hero--compact">
         <p className="section-eyebrow">Contact</p>
         <h1 className="page-title">Start a project</h1>

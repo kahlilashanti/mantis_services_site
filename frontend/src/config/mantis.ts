@@ -92,6 +92,7 @@ export const brand = {
     },
   ] satisfies DifferentiatorPillar[],
   closingLine: 'Ready to build something people stay for?',
+  siteUrl: 'https://trymantislabs.com',
   email: 'hello@trymantislabs.com',
   calendlyUrl: 'https://calendly.com/kahlilashanti',
 }

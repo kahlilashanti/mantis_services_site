@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { brand, navLinks } from '@src/config/mantis'
+import BrandLogo from '@src/components/global/BrandLogo/BrandLogo'
 
 function Footer() {
   return (
@@ -8,7 +9,9 @@ function Footer() {
       <Container fluid className="px-4 px-lg-5">
         <Row className="g-4 align-items-end">
           <Col lg={6}>
-            <p className="mantis-footer__brand">{brand.name}</p>
+            <Link to="/" className="mantis-footer__logo">
+              <BrandLogo variant="footer" />
+            </Link>
             <p className="mantis-footer__line">{brand.headline}</p>
           </Col>
           <Col sm={6} lg={3}>

@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { brand, navLinks } from '@src/config/mantis'
+import { navLinks } from '@src/config/mantis'
+import BrandLogo from '@src/components/global/BrandLogo/BrandLogo'
 
 function NavBar() {
   const [scrolled, setScrolled] = useState(false)
@@ -26,7 +27,7 @@ function NavBar() {
     <header className={`mantis-nav ${scrolled ? 'mantis-nav--scrolled' : 'mantis-nav--hero'}`}>
       <div className="mantis-nav__inner">
         <Link to="/" className="mantis-nav__logo" onClick={() => setMenuOpen(false)}>
-          {brand.name}
+          <BrandLogo variant="nav" />
         </Link>
 
         <button

@@ -59,7 +59,7 @@ export function organizationJsonLd() {
     url: site.url,
     email: brand.email,
     description: site.defaultDescription,
-    logo: absoluteUrl('/videos/hero-reel-poster.jpg'),
+    logo: absoluteUrl(brand.logos.markWhite),
   }
 }
 

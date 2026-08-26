@@ -57,7 +57,12 @@ export interface DifferentiatorPillar {
 }
 
 export const brand = {
-  name: 'Mantis',
+  name: 'Mantis Labs',
+  logos: {
+    horizontalWhite: '/images/brand/mantis-logo-horizontal-white.png',
+    verticalWhite: '/images/brand/mantis-logo-vertical-white.png',
+    markWhite: '/images/brand/mantis-logo-mark-white.png',
+  },
   headline: 'We build digital experiences worth staying in.',
   subheadline:
     'Mantis is a creative technology company that builds experiences people want to explore, participate in, and return to.',

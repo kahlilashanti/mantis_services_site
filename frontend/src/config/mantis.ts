@@ -17,6 +17,9 @@ export const media = {
 
 export type WorkVideoKey = keyof typeof media.workVideos
 
+/** Homepage and /work portfolio cap until full case studies ship. */
+export const featuredWorkLimit = 6
+
 export interface WorkItem {
   id: string
   client: string

@@ -16,7 +16,7 @@ function Home() {
       <Hero />
       <ClientLogos />
       <StatementBand />
-      <WorkGrid limit={6} />
+      <WorkGrid />
       <Team />
       <Capabilities />
       <Differentiator />

@@ -1,7 +1,7 @@
 import type { CSSProperties, RefObject } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { media, work, type WorkItem } from '@src/config/mantis'
+import { media, work, featuredWorkLimit, type WorkItem } from '@src/config/mantis'
 import { useReveal } from '@src/hooks/useReveal'
 import { useIsTouchDevice } from '@src/hooks/useMediaQuery'
 
@@ -212,9 +212,8 @@ function WorkTile({ item, index }: { item: WorkItem; index: number }) {
   )
 }
 
-function WorkGrid({ limit }: { limit?: number }) {
-  const base = limit ? work : work.filter((item) => !item.placeholder)
-  const items = limit ? base.slice(0, limit) : base
+function WorkGrid({ limit = featuredWorkLimit }: { limit?: number }) {
+  const items = work.slice(0, limit)
   const { ref, visible } = useReveal(0.08)
 
   return (

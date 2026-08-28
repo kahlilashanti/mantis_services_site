@@ -2,17 +2,26 @@ import { Link } from 'react-router-dom'
 import { brand } from '@src/config/mantis'
 import HeroVideo from '@src/components/home/Hero/HeroVideo'
 
+function HeroViewportChrome() {
+  return (
+    <div className="hero__viewport-bar" aria-hidden="true">
+      <div className="hero__viewport-dots">
+        <span />
+        <span />
+        <span />
+      </div>
+      <span className="hero__viewport-url">trymantislabs.com</span>
+    </div>
+  )
+}
+
 function Hero() {
   return (
-    <section className="hero" aria-label="Showreel">
-      <div className="hero__media">
-        <HeroVideo />
-        <div className="hero__scrims" aria-hidden="true" />
-        <div className="hero__grain" aria-hidden="true" />
-      </div>
+    <section className="hero hero--framed" aria-label="Showreel">
+      <div className="hero__ambient" aria-hidden="true" />
 
-      <div className="hero__content">
-        <div className="hero__content-inner">
+      <div className="hero__shell">
+        <div className="hero__copy">
           <p className="hero__eyebrow">
             <span className="hero__pulse" aria-hidden="true" />
             Creative Technology Studio
@@ -22,9 +31,7 @@ function Hero() {
             <span className="hero__title-line hero__title-line--accent">worth staying in.</span>
           </h1>
           <p className="hero__sub">{brand.subheadline}</p>
-        </div>
 
-        <div className="hero__footer">
           <div className="hero__actions">
             <Link to="/contact" className="btn-mantis btn-mantis--ghost btn-mantis--glass-cta">
               Start a conversation
@@ -32,6 +39,19 @@ function Hero() {
             <Link to="/work" className="btn-mantis btn-mantis--primary">
               See the work
             </Link>
+          </div>
+        </div>
+
+        <div className="hero__viewport-wrap">
+          <div className="hero__viewport-glow" aria-hidden="true" />
+          <div className="hero__viewport">
+            <HeroViewportChrome />
+            <div className="hero__viewport-screen">
+              <div className="hero__media">
+                <HeroVideo />
+                <div className="hero__viewport-vignette" aria-hidden="true" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
